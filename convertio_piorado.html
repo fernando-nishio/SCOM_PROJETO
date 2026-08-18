@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width= device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Freevertio</title>
         <link rel="stylesheet" href="convertio_css.css">
     </head>
@@ -15,25 +15,38 @@
                 <li><a href="Sobre.html">Sobre</a></li>
                 <li><a href="Login.html">Login</a></li>
             </ul>
-            </div>
         </nav>
     </header>
-    <h1>Bem vindo ao Freevertio, a versão piorada do convertio, sinta-se a vontade para fazer a conversão de arquivos aqui</h1>
-<!--
-AQUI COLOCAR O SCRIPT DO CONVERSOR
 
--->
-    <h3>Crie o seu login para poder acessar a sua biblioteca  de arquivos convertidos</h3> 
-    <footer class ="rodape">
+    <h1>Bem vindo ao Freevertio, a versão piorada do convertio, sinta-se a vontade para fazer a conversão de arquivos aqui</h1>
+
+    <section class="conversor">
+        <h3>Conversor</h3>
+        <div class="area_upload">
+            <input type="file" id="Arquivo_input" onchange="prepareFile()">
+        </div>
+        <div id="fileInfo" class="file_info" style="display:none;">
+            <p>Arquivo detectado: <span id="fileName"></span></p>
+            <p>Formato detectado: <span id="fileType"></span></p>
+        </div>
+        <div id="conversionController" style="display:none;">
+            <label for="formatSelect">Converter para:</label>
+            <select id="formatSelect"></select>
+            <button id="Convert_button" onclick="Convert()">Iniciar conversão</button>
+        </div>
+        <div id="outputArea"></div>
+    </section>
+
+    <h3>Crie o seu login para poder acessar a sua biblioteca de arquivos convertidos</h3> 
+
+    <footer class="rodape">
         <p>&copy; 2026 Freevertio</p>
         <p><a href="https://www.youtube.com/watch?v=sxcAXamuyR4">Contato</a></p>
         <p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Redes sociais</a></p>
     </footer>
+    <script src="script_conversaum.js">
     </body>
 </html>
-
-
-
 <!--
     ATENÇÃO NO PROGRAMA FOI USADO IA PARA AUXILIAR  NA COMPREENSÃO DE
     ALGUMAS FUNÇÕES (footer,nav etc) E NA PROGRAMAÇÃO DO CONVERSOR

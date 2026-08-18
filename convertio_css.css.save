@@ -6,13 +6,7 @@ box-sizing: border-box;
 body{
 font-family:"Open Sans",Tahoma,Geneva,Verdana,sans-serif;
 }
-.images{
-text-align:center;
-margin:4rem 2rem;
-color:#333;
-font-weight:300;
-line-weight:1.5;
-}
+
 .barra_nav{
 display:flex;
 justify-content:space-between;
@@ -22,12 +16,6 @@ padding: 1rem 2rem;
 position:sticky;
 top:0;
 z-index:1000;
-}
-img {
-border-radius: 8px;
-display:block;
-margin: 0 auto;
-max-width:100%;
 }
 
 .logo_site {
@@ -57,22 +45,20 @@ background-color: #222;
 color: #ccc;
 text-align: center;
 padding: 1.5rem;
-margin-top: auto;
-width:100%; 
-font-size: 1.1rem;
-}
-.rodape a{
-color: #ccc;
-text-decoration:none;
-transition: color 0.3s ease;
-}
-.rodape a:hover {
-color:#9e12a3;
+margin-top: 3rem; 
+font-size: 0.9rem;
 }
 h1{
 text-align:center;
 margin:4rem 2rem;
 color:#333;
+font-weight:300;
+line-weight:1.5;
+}
+h2{
+text-align:center;
+margin: 4rem 2rem;
+color: #333;
 font-weight:300;
 line-weight:1.5;
 }
