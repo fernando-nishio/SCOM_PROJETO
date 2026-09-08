@@ -19,6 +19,20 @@ z-index: 1000;
 width: 100%;
 }
 
+.hidden {
+display:none;
+}
+
+.texto_erro {
+color: #e7c3c;
+margin-top: 1rem;
+}
+
+
+.texto_sucesso{
+margin-top:1rem;
+}
+
 .barra_nav {
 display: flex;
 justify-content: space-between;
@@ -58,6 +72,14 @@ margin: 4rem 2rem 2rem;
 color: #333;
 font-weight: 300;
 line-height: 1.5;
+}
+
+h2 {
+text-align:center;
+margin: 4rem 2rem 2rem;
+color: #333;
+font-weight: 300;
+line-weight: 1.5;
 }
 
 h3 {
@@ -209,6 +231,10 @@ border-radius: 16px;
 box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 text-align: center;
 border: 1px solid #eaeaea;
+}
+
+.texto_branco{
+color:#ffffff;
 }
 
 .login_conta h3 {

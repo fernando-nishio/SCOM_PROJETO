@@ -34,12 +34,12 @@ function prepareFile() {
   const fileInfo = document.getElementById('fileInfo');
   const fileNameSpan = document.getElementById('fileName');
   const fileTypeSpan = document.getElementById('fileType');
-  const formatSelect = document.getElementById('formatSelect');
-  const conversionController = document.getElementById('conversionController');
+  const formatSelect = document.getElementById('format_select');
+  const conversionController = document.getElementById('conversion_controller');
   const outputArea = document.getElementById('outputArea');
 
   fileNameSpan.textContent = fileName;
-  fileInfo.style.display = 'block';
+  fileInfo.classList.remove('hidden');
   outputArea.innerHTML = '';
 
   if (detectedCategory && supportedFormats[detectedCategory]) {
@@ -54,11 +54,11 @@ function prepareFile() {
       formatSelect.appendChild(option);
     });
 
-    conversionController.style.display = 'block';
+    conversionController.classList.remove('hidden');
   } else {
     fileTypeSpan.textContent = 'Não Suportado';
-    conversionController.style.display = 'none';
-    outputArea.innerHTML = `<p style="color: red; margin-top: 1rem;">O formato ".${extension}" não é suportado para conversão no navegador.</p>`;
+    conversionController.classList.add('hidden');
+    outputArea.innerHTML = `<p class="login_erro">O formato ".${extension}" não é suportado para conversão no navegador.</p>`;
   }
 }
 
@@ -73,7 +73,7 @@ function Convert() {
 }
 
 function convertImage(file) {
-  const formatSelect = document.getElementById('formatSelect');
+  const formatSelect = document.getElementById('format_select');
   const targetFormat = formatSelect.value;
   const ext = formatSelect.options[formatSelect.selectedIndex].dataset.ext;
 
@@ -101,7 +101,7 @@ function convertImage(file) {
 }
 
 function convertData(file) {
-  const formatSelect = document.getElementById('formatSelect');
+  const formatSelect = document.getElementById('format_select');
   const targetFormat = formatSelect.value;
   const ext = formatSelect.options[formatSelect.selectedIndex].dataset.ext;
   const reader = new FileReader();
@@ -128,7 +128,7 @@ function convertData(file) {
       const downloadUrl = URL.createObjectURL(blob);
       displayDownloadLink(downloadUrl, `convertido.${ext}`);
     } catch (err) {
-      document.getElementById('outputArea').innerHTML = "<p style='color:red;'>Erro na conversão. Certifique-se de que o arquivo está formatado corretamente!</p>";
+      document.getElementById('outputArea').innerHTML = "<p class='login_erro'>Erro na conversão. Certifique-se de que o arquivo está formatado corretamente!</p>";
     }
   };
 
@@ -137,8 +137,8 @@ function convertData(file) {
 
 function displayDownloadLink(url, filename) {
   document.getElementById('outputArea').innerHTML = `
-    <p style="margin-top: 1rem;">Conversão concluída!</p>
-    <a href="${url}" download="${filename}" class="download-link">
+    <p class="file_info">Conversão concluída!</p>
+    <a href="${url}" download="${filename}" class="download_link">
       Baixar ${filename}
     </a>
   `;
