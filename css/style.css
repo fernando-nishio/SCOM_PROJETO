@@ -1,0 +1,448 @@
+/*
+  Freevertio - folha de estilos principal
+  Organização:
+    1. Variáveis e reset
+    2. Base (tipografia, links, foco)
+    3. Cabeçalho e navegação
+    4. Seções de conteúdo
+    5. Conversor
+    6. Botões
+    7. Login
+    8. Rodapé
+    9. Utilitários
+   10. Responsividade (tablet e mobile)
+*/
+
+/* 1. Variáveis e reset */
+:root {
+  --cor-escura: #222222;
+  --cor-superficie: #2a2a2a;
+  --cor-texto: #333333;
+  --cor-clara: #ffffff;
+  --cor-primaria: #9e12a3;
+  --cor-primaria-escura: #7b0d80;
+  --cor-destaque: #d98bdc;   /* roxo claro: usado sobre fundo escuro (contraste 6.5:1) */
+  --cor-erro: #ffb3b3;
+
+  --fonte-base: Tahoma, Geneva, Verdana, sans-serif;
+
+  --espaco-p: 0.5rem;
+  --espaco-m: 1rem;
+  --espaco-g: 2rem;
+  --espaco-xg: 3rem;
+
+  --raio: 0.5rem;
+  --raio-g: 1rem;
+  --sombra: 0 0.75rem 2rem rgba(0, 0, 0, 0.15);
+  --transicao: 0.3s ease;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 2. Base */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: var(--fonte-base);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--cor-texto);
+  background-color: var(--cor-clara);
+}
+
+main {
+  flex: 1;
+  width: 100%;
+}
+
+h1,
+h2 {
+  text-align: center;
+  color: var(--cor-texto);
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: var(--espaco-xg) var(--espaco-g) var(--espaco-m);
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: var(--espaco-xg) var(--espaco-g) var(--espaco-m);
+}
+
+p + p {
+  margin-top: 0.75em;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: var(--raio);
+}
+
+a {
+  color: var(--cor-primaria);
+}
+
+/* Foco visível: anel duplo, visível tanto em fundo claro quanto escuro */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--cor-destaque);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--cor-escura);
+}
+
+/* 3. Cabeçalho e navegação */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.barra_nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--espaco-m);
+  padding: var(--espaco-m) var(--espaco-g);
+  background-color: var(--cor-escura);
+}
+
+.logo_site {
+  color: var(--cor-clara);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.link_de_nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-g);
+  list-style: none;
+}
+
+.link_de_nav a {
+  color: var(--cor-clara);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color var(--transicao), border-color var(--transicao);
+}
+
+.link_de_nav a:hover {
+  color: var(--cor-destaque);
+}
+
+/* Indicação da página atual */
+.link_de_nav a[aria-current="page"] {
+  color: var(--cor-destaque);
+  border-bottom-color: var(--cor-destaque);
+}
+
+/* 4. Seções de conteúdo */
+.intro,
+.texto_secao {
+  max-width: 70ch;
+  margin: 0 auto;
+  padding: 0 var(--espaco-g);
+  text-align: center;
+}
+
+.texto_secao {
+  text-align: left;
+}
+
+.secao {
+  padding-bottom: var(--espaco-g);
+}
+
+.imagens {
+  margin: var(--espaco-g) auto;
+  padding: 0 var(--espaco-g);
+  text-align: center;
+}
+
+.imagens figcaption {
+  margin-top: var(--espaco-p);
+  font-style: italic;
+}
+
+.centralizado {
+  text-align: center;
+  margin-top: var(--espaco-m);
+}
+
+/* 5. Conversor */
+.conversor {
+  max-width: 44rem;
+  margin: var(--espaco-g) auto;
+  padding: var(--espaco-xg) 2.5rem;
+  text-align: center;
+  color: var(--cor-clara);
+  background-color: var(--cor-escura);
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra);
+}
+
+.conversor h2 {
+  margin: 0 0 var(--espaco-m);
+  color: var(--cor-clara);
+}
+
+.area_upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco-p);
+  margin: var(--espaco-g) 0;
+  padding: 2.5rem 1.5rem;
+  background-color: var(--cor-superficie);
+  border: 2px dashed var(--cor-destaque);
+  border-radius: var(--raio-g);
+  transition: background-color var(--transicao);
+}
+
+.area_upload:hover {
+  background-color: #38233c;
+}
+
+.area_upload label {
+  font-weight: 600;
+}
+
+.area_upload input[type="file"] {
+  max-width: 100%;
+  font-size: 1rem;
+  color: var(--cor-clara);
+  cursor: pointer;
+}
+
+.file_info {
+  margin: 1.5rem 0;
+  padding: var(--espaco-m) 1.5rem;
+  text-align: left;
+  color: var(--cor-texto);
+  background-color: #f8f9fa;
+  border-left: 4px solid var(--cor-primaria);
+  border-radius: var(--raio);
+  overflow-wrap: anywhere;
+}
+
+.controle_conversao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaco-m);
+  margin-top: 1.5rem;
+}
+
+.controle_conversao label {
+  font-weight: 600;
+}
+
+.controle_conversao select {
+  padding: 0.75rem var(--espaco-m);
+  font-size: 1rem;
+  color: var(--cor-texto);
+  background-color: var(--cor-clara);
+  border: 1px solid #cccccc;
+  border-radius: var(--raio);
+  cursor: pointer;
+}
+
+.mensagem_erro {
+  margin-top: var(--espaco-m);
+  color: var(--cor-erro);
+  font-weight: 600;
+}
+
+/* 6. Botões (primário único, usado em todo o site) */
+.botao_primario {
+  display: inline-block;
+  padding: 0.85rem var(--espaco-g);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cor-clara);
+  text-decoration: none;
+  background-color: var(--cor-primaria);
+  border: none;
+  border-radius: var(--raio);
+  cursor: pointer;
+  transition: background-color var(--transicao), transform 0.1s ease;
+}
+
+.botao_primario:hover {
+  background-color: var(--cor-primaria-escura);
+  transform: translateY(-2px);
+}
+
+.botao_link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  color: var(--cor-destaque);
+}
+
+.botao_link:hover {
+  text-decoration: none;
+}
+
+/* 7. Login */
+.login_conta {
+  max-width: 26rem;
+  margin: var(--espaco-xg) auto;
+  padding: 2.5rem var(--espaco-g);
+  text-align: center;
+  color: var(--cor-clara);
+  background-color: var(--cor-escura);
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra);
+}
+
+.login_conta h1 {
+  margin: 0 0 1.5rem;
+  font-size: 1.75rem;
+  color: var(--cor-clara);
+}
+
+.form_group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+  text-align: left;
+}
+
+.form_group label {
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.form_group input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #cccccc;
+  border-radius: var(--raio);
+}
+
+.login_conta .botao_primario {
+  width: 100%;
+  margin-top: var(--espaco-m);
+}
+
+/* 8. Rodapé */
+.rodape {
+  width: 100%;
+  margin-top: var(--espaco-xg);
+  padding: 1.5rem;
+  text-align: center;
+  color: #cccccc;
+  background-color: var(--cor-escura);
+}
+
+.rodape a {
+  color: #cccccc;
+  transition: color var(--transicao);
+}
+
+.rodape a:hover {
+  color: var(--cor-destaque);
+}
+
+/* 9. Utilitários */
+[hidden] {
+  display: none !important;
+}
+
+/* 10. Responsividade */
+
+/* Tablet */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.9rem;
+    margin: var(--espaco-g) var(--espaco-m) var(--espaco-m);
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin: var(--espaco-g) var(--espaco-m) var(--espaco-m);
+  }
+
+  .conversor {
+    margin: var(--espaco-g) var(--espaco-m);
+    padding: var(--espaco-g) 1.5rem;
+  }
+
+  .login_conta {
+    margin: var(--espaco-g) var(--espaco-m);
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .barra_nav {
+    flex-direction: column;
+    padding: var(--espaco-m);
+  }
+
+  .link_de_nav {
+    justify-content: center;
+    gap: var(--espaco-m) 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+  }
+
+  .intro,
+  .texto_secao,
+  .imagens {
+    padding: 0 var(--espaco-m);
+  }
+
+  .conversor {
+    padding: 1.5rem var(--espaco-m);
+  }
+
+  .area_upload {
+    padding: 1.5rem var(--espaco-m);
+  }
+
+  .controle_conversao {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .login_conta {
+    padding: var(--espaco-g) 1.25rem;
+  }
+}
+
+/*
+  ATENÇÃO: FOI USADA IA NESTE PROGRAMA PARA ENTENDER O USO BÁSICO DE CSS
+  E PARA SUGESTÕES DE ALTERAÇÕES ESTILÍSTICAS.
+  Revisão de acessibilidade, contraste, variáveis e responsividade feita com
+  auxílio do Claude (Anthropic) - detalhes no relatório.
+*/

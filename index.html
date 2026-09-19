@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Freevertio: conversor de arquivos gratuito que funciona direto no navegador.">
+    <title>Freevertio</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <header>
+      <nav class="barra_nav" aria-label="Navegação principal">
+        <a href="index.html" class="logo_site">Freevertio</a>
+        <ul class="link_de_nav">
+          <li><a href="index.html" aria-current="page">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="titulo_principal">
+        <h1 id="titulo_principal">Freevertio: conversor de arquivos</h1>
+        <p>A versão piorada do Convertio. Converta imagens e arquivos de dados direto no navegador, sem enviar nada para um servidor.</p>
+      </section>
+
+      <section class="conversor" aria-labelledby="titulo_conversor">
+        <h2 id="titulo_conversor">Conversor</h2>
+        <p>Formatos aceitos: JPG, PNG, WEBP, CSV, JSON e TXT.</p>
+
+        <div class="area_upload">
+          <label for="arquivo_input">Selecione um arquivo para converter</label>
+          <input type="file" id="arquivo_input" accept=".jpg,.jpeg,.png,.webp,.csv,.json,.txt">
+        </div>
+
+        <div id="info_arquivo" class="file_info" hidden>
+          <p>Arquivo detectado: <span id="nome_arquivo"></span></p>
+          <p>Formato detectado: <span id="tipo_arquivo"></span></p>
+        </div>
+
+        <div id="controle_conversao" class="controle_conversao" hidden>
+          <label for="formato_select">Converter para:</label>
+          <select id="formato_select"></select>
+          <button type="button" id="botao_converter" class="botao_primario">Iniciar conversão</button>
+        </div>
+
+        <div id="area_saida" aria-live="polite"></div>
+      </section>
+
+      <section class="secao" aria-labelledby="titulo_biblioteca">
+        <h2 id="titulo_biblioteca">Sua biblioteca de arquivos</h2>
+        <p class="texto_secao">Em breve você poderá criar uma conta para guardar os arquivos que converteu e baixá-los de novo quando quiser.</p>
+        <figure class="imagens">
+          <img src="img/conversao.svg" alt="Ilustração de um documento sendo convertido em outro formato" width="480" height="240" loading="lazy">
+          <figcaption>Converta, guarde e baixe seus arquivos.</figcaption>
+        </figure>
+        <p class="centralizado">
+          <a href="cria_login.html" class="botao_primario">Criar minha conta</a>
+        </p>
+      </section>
+    </main>
+
+    <footer class="rodape">
+      <p>&copy; 2026 Freevertio</p>
+      <p><a href="https://www.youtube.com/watch?v=sxcAXamuyR4">Contato</a></p>
+      <p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Redes sociais</a></p>
+    </footer>
+
+    <script src="js/conversor.js"></script>
+  </body>
+</html>
+<!--
+  ATENÇÃO: NO PROGRAMA FOI USADA IA PARA AUXILIAR NA COMPREENSÃO DE
+  ALGUMAS FUNÇÕES (footer, nav etc.) E NA PROGRAMAÇÃO DO CONVERSOR.
+  Correções de semântica e acessibilidade feitas com auxílio do Claude (Anthropic).
+-->
