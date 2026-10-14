@@ -13,11 +13,13 @@ armazenamento/
 *~
 
 # Jarras de cookie dos testes com curl
-cookies*.txt
-c.txt
-admin.txt
 
 # Jarras de cookie dos testes com curl
-cookies*.txt
+
+# Jarras de cookie dos testes com curl
+*.cookie
+cookies.txt
+a.txt
 c.txt
+u.txt
 admin.txt
