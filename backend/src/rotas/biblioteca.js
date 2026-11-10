@@ -1,6 +1,14 @@
 /**
  * Rotas da biblioteca.
  *
+ * Montadas em /api/biblioteca (ver servidor.js), com prefixo proprio.
+ *
+ * O prefixo nao e estetica: este router aplica exigirLogin ao conjunto
+ * todo, e no Express um router.use() roda para QUALQUER requisicao que
+ * entre no router - inclusive uma que nao casa com nenhuma rota dele.
+ * Montado em /api sem prefixo, ele interceptaria /api/conversoes e
+ * devolveria 401 antes de a requisicao chegar ao seu destino.
+ *
  *   POST   /api/biblioteca            guarda um arquivo ja convertido
  *   GET    /api/biblioteca            lista a biblioteca do usuario
  *   GET    /api/biblioteca/:id/arquivo  baixa um item proprio
@@ -27,7 +35,7 @@ rotasBiblioteca.use(exigirLogin);
 /* ---------------------------------------------------------------------
  *  POST /api/biblioteca
  * ------------------------------------------------------------------- */
-rotasBiblioteca.post("/biblioteca", receberArquivo, async (req, res, proximo) => {
+rotasBiblioteca.post("/", receberArquivo, async (req, res, proximo) => {
 	try {
 		const item = await biblioteca.guardar({
 			usuarioId: req.usuario.id,
@@ -54,7 +62,7 @@ rotasBiblioteca.post("/biblioteca", receberArquivo, async (req, res, proximo) =>
 /* ---------------------------------------------------------------------
  *  GET /api/biblioteca?pagina=1&porPagina=20
  * ------------------------------------------------------------------- */
-rotasBiblioteca.get("/biblioteca", async (req, res, proximo) => {
+rotasBiblioteca.get("/", async (req, res, proximo) => {
 	try {
 		const resultado = await biblioteca.listar(req.usuario.id, {
 			pagina: req.query.pagina,
@@ -81,7 +89,7 @@ rotasBiblioteca.get("/biblioteca", async (req, res, proximo) => {
  *    X-Content-Type-Options: nosniff         proibe o navegador de
  *                                            adivinhar o tipo real
  * ------------------------------------------------------------------- */
-rotasBiblioteca.get("/biblioteca/:id/arquivo", async (req, res, proximo) => {
+rotasBiblioteca.get("/:id/arquivo", async (req, res, proximo) => {
 	try {
 		const { linha, conteudo } = await biblioteca.obterParaDownload(
 			req.params.id,
@@ -116,7 +124,7 @@ rotasBiblioteca.get("/biblioteca/:id/arquivo", async (req, res, proximo) => {
  *  PATCH e nao PUT: a requisicao altera um campo, nao substitui o
  *  recurso inteiro.
  * ------------------------------------------------------------------- */
-rotasBiblioteca.patch("/biblioteca/:id", async (req, res, proximo) => {
+rotasBiblioteca.patch("/:id", async (req, res, proximo) => {
 	try {
 		const item = await biblioteca.renomear(req.params.id, req.usuario.id, req.body?.nome);
 		res.json({ item });
@@ -128,7 +136,7 @@ rotasBiblioteca.patch("/biblioteca/:id", async (req, res, proximo) => {
 /* ---------------------------------------------------------------------
  *  DELETE /api/biblioteca/:id
  * ------------------------------------------------------------------- */
-rotasBiblioteca.delete("/biblioteca/:id", async (req, res, proximo) => {
+rotasBiblioteca.delete("/:id", async (req, res, proximo) => {
 	try {
 		const item = await biblioteca.apagar(req.params.id, req.usuario.id);
 

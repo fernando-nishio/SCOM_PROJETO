@@ -123,7 +123,7 @@ app.get("/api/csrf", rotaToken);
 app.use("/api", verificarCsrf);
 
 app.use("/api", rotasAutenticacao);
-app.use("/api", rotasBiblioteca);
+app.use("/api/biblioteca", rotasBiblioteca);
 app.use("/api", rotasConversoes);
 app.use("/api/admin", rotasAdmin);
 
