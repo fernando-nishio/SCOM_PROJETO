@@ -12,9 +12,8 @@ armazenamento/
 *.save
 *~
 
-# Jarras de cookie dos testes com curl
-
-# Jarras de cookie dos testes com curl
+# Arquivos de troca do editor
+*.swp
 
 # Jarras de cookie dos testes com curl
 *.cookie
@@ -23,9 +22,3 @@ a.txt
 c.txt
 u.txt
 admin.txt
-
-# Arquivos de troca do editor
-*.swp
-
-# Arquivos de troca do editor
-*.swp
