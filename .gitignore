@@ -26,3 +26,6 @@ admin.txt
 
 # Arquivos de troca do editor
 *.swp
+
+# Arquivos de troca do editor
+*.swp
