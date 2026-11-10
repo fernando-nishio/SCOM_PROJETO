@@ -5,7 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Sobre o Freevertio">
         <title>Freevertio - Sobre</title>
+        <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/componentes.css">
     </head>
     <body>
     <header>
@@ -14,7 +16,13 @@
             <ul class="link_de_nav">
                 <li><a href="index.html">Início</a></li>
                 <li><a href="sobre.html" aria-current="page">Sobre</a></li>
-                <li><a href="login.html">Login</a></li>
+                <li data-sessao="anonimo" hidden><a href="login.html">Entrar</a></li>
+                <li data-sessao="anonimo" hidden><a href="cria_login.html">Criar conta</a></li>
+                <li data-sessao="logado" hidden><a href="biblioteca.html">Minha biblioteca</a></li>
+                <li data-sessao="admin" hidden><a href="admin.html">Administração</a></li>
+                <li data-sessao="logado" hidden>
+                    <button type="button" data-acao="sair">Sair</button>
+                </li>
             </ul>
         </nav>
     </header>
@@ -23,9 +31,12 @@
             <h1>Sobre o Freevertio</h1>
             <div class="texto_secao">
                 <p>O Freevertio é um site criado por Fernando Nishio como projeto para a disciplina de SCOM.</p>
+                <p>A conversão de imagens e de arquivos de dados acontece no próprio navegador, sem que o arquivo saia do computador. Os formatos que o navegador não alcança — PDF e documentos do Office — são convertidos no servidor, e só com autorização explícita a cada conversão. Nada é guardado sem que você marque a opção de guardar.</p>
             </div>
             <figure class="imagens">
-                <img src="img/airshakur.png" alt="air shakur não é uma foto minha">
+                <img src="img/airshakur.png"
+                     alt="Ilustração da personagem Air Shakur: uma garota de cabelo preto comprido, com orelhas de cavalo e uniforme escolar roxo e branco"
+                     width="320" height="320" loading="lazy">
                 <figcaption>Foto 100% legitima do criador do site</figcaption>
             </figure>
         </article>
@@ -35,5 +46,7 @@
         <p><a href="https://www.youtube.com/watch?v=sxcAXamuyR4">Contato</a></p>
         <p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Redes sociais</a></p>
     </footer>
+
+    <script type="module" src="js/sessao-ui.js"></script>
     </body>
 </html>
