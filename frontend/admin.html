@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Área administrativa do Freevertio: contas, uso do sistema e registros de eventos.">
+    <title>Administração - Freevertio</title>
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/componentes.css">
+  </head>
+  <body>
+    <header>
+      <nav class="barra_nav" aria-label="Navegação principal">
+        <a href="index.html" class="logo_site">Freevertio</a>
+        <ul class="link_de_nav">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li data-sessao="logado" hidden><a href="biblioteca.html">Minha biblioteca</a></li>
+          <li data-sessao="admin" hidden><a href="admin.html" aria-current="page">Administração</a></li>
+          <li data-sessao="logado" hidden>
+            <button type="button" data-acao="sair">Sair</button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="secao" aria-labelledby="titulo_admin">
+        <h1 id="titulo_admin">Administração</h1>
+        <p class="intro">
+          Visão geral do sistema. Esta página só é acessível ao perfil
+          administrador — e o servidor recusa os dados a qualquer outro,
+          independentemente do que a interface mostre.
+        </p>
+
+        <p id="mensagem" class="mensagem_sucesso" role="status" aria-live="polite" hidden></p>
+        <p id="mensagem_erro" class="mensagem_erro" role="alert" hidden></p>
+      </section>
+
+      <section class="secao" aria-labelledby="titulo_estatisticas">
+        <h2 id="titulo_estatisticas">Uso do sistema</h2>
+        <ul class="painel_estatisticas" id="painel_estatisticas"></ul>
+        <p id="aviso_orfaos" class="aviso_offline" role="status" hidden></p>
+      </section>
+
+      <section class="secao" aria-labelledby="titulo_contas">
+        <h2 id="titulo_contas">Contas</h2>
+        <div class="rolagem_tabela">
+          <table class="tabela_admin">
+            <caption>Usuários cadastrados</caption>
+            <thead>
+              <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Perfil</th>
+                <th scope="col">Conversões</th>
+                <th scope="col">Criada em</th>
+                <th scope="col">Situação</th>
+              </tr>
+            </thead>
+            <tbody id="corpo_usuarios"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="secao" aria-labelledby="titulo_logs">
+        <h2 id="titulo_logs">Registros de eventos</h2>
+
+        <div class="filtros">
+          <div class="form_group">
+            <label for="filtro_nivel">Nível:</label>
+            <select id="filtro_nivel">
+              <option value="">Todos</option>
+              <option value="info">Informação</option>
+              <option value="aviso">Aviso</option>
+              <option value="erro">Erro</option>
+            </select>
+          </div>
+          <button type="button" id="atualizar_logs" class="botao_pequeno">Atualizar</button>
+        </div>
+
+        <div class="rolagem_tabela">
+          <table class="tabela_admin">
+            <caption>Últimos eventos registrados</caption>
+            <thead>
+              <tr>
+                <th scope="col">Quando</th>
+                <th scope="col">Nível</th>
+                <th scope="col">Evento</th>
+                <th scope="col">Usuário</th>
+                <th scope="col">IP</th>
+                <th scope="col">Detalhe</th>
+              </tr>
+            </thead>
+            <tbody id="corpo_logs"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="rodape">
+      <p>&copy; 2026 Freevertio</p>
+    </footer>
+
+    <script type="module" src="js/admin.js"></script>
+  </body>
+</html>

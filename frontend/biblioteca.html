@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Biblioteca de arquivos convertidos do Freevertio: baixe, renomeie ou apague os arquivos que você escolheu guardar.">
+	<title>Minha biblioteca — Freevertio</title>
+	<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/componentes.css">
+</head>
+<body>
+
+	<header>
+		<nav class="barra_nav" aria-label="Navegação principal">
+			<a href="index.html" class="logo_site">Freevertio</a>
+			<ul class="link_de_nav">
+				<li><a href="index.html">Início</a></li>
+				<li><a href="sobre.html">Sobre</a></li>
+				<li data-sessao="anonimo" hidden><a href="login.html">Entrar</a></li>
+				<li data-sessao="anonimo" hidden><a href="cria_login.html">Criar conta</a></li>
+				<li data-sessao="logado" hidden><a href="biblioteca.html" aria-current="page">Minha biblioteca</a></li>
+				<li data-sessao="admin" hidden><a href="admin.html">Administração</a></li>
+				<li data-sessao="logado" hidden>
+					<button type="button" data-acao="sair">Sair</button>
+				</li>
+			</ul>
+		</nav>
+	</header>
+
+	<main>
+		<section class="secao" aria-labelledby="titulo_biblioteca">
+			<h1 id="titulo_biblioteca">Minha biblioteca</h1>
+
+			<p class="intro">
+				Os arquivos que você escolheu guardar depois de converter.
+				Nada entra aqui sem autorização explícita.
+			</p>
+
+			<!-- aria-live="polite" faz o leitor de tela anunciar mensagens de
+			     sucesso e de erro sem interromper a leitura em curso. -->
+			<p id="mensagem" class="mensagem_sucesso" role="status" aria-live="polite" hidden></p>
+			<p id="mensagem_erro" class="mensagem_erro" role="alert" hidden></p>
+
+			<p id="carregando" class="texto_secao">Carregando sua biblioteca…</p>
+
+			<!-- Estado vazio: uma lista em branco parece defeito. Esta caixa
+			     explica como itens chegam aqui. -->
+			<div id="estado_vazio" class="estado_vazio" hidden>
+				<p>
+					Você ainda não guardou nenhum arquivo. Converta algo na página
+					inicial e marque <strong>“Guardar na minha biblioteca”</strong> antes
+					de iniciar a conversão.
+				</p>
+				<a href="index.html" class="botao_primario">Converter um arquivo</a>
+			</div>
+
+			<ul id="lista" class="lista_biblioteca" hidden></ul>
+
+			<nav class="paginacao" id="paginacao" aria-label="Paginação da biblioteca" hidden>
+				<button type="button" id="pagina_anterior" class="botao_pequeno">Anterior</button>
+				<span id="indicador_pagina" aria-live="polite"></span>
+				<button type="button" id="pagina_seguinte" class="botao_pequeno">Próxima</button>
+			</nav>
+		</section>
+	</main>
+
+	<!-- Confirmação de ação destrutiva. O elemento <dialog> nativo já
+	     prende o foco, fecha com Esc e se anuncia como modal. -->
+	<dialog id="dialogo_apagar" class="dialogo" aria-labelledby="titulo_apagar">
+		<h2 id="titulo_apagar">Apagar arquivo</h2>
+		<p>
+			O arquivo <strong id="nome_para_apagar"></strong> será removido do
+			servidor permanentemente. Esta ação não pode ser desfeita.
+		</p>
+		<div class="dialogo_acoes">
+			<button type="button" id="cancelar_apagar" class="botao_pequeno">Cancelar</button>
+			<button type="button" id="confirmar_apagar" class="botao_pequeno botao_perigo">Apagar</button>
+		</div>
+	</dialog>
+
+	<dialog id="dialogo_renomear" class="dialogo" aria-labelledby="titulo_renomear">
+		<h2 id="titulo_renomear">Renomear arquivo</h2>
+		<form method="dialog">
+			<div class="form_group">
+				<label for="novo_nome">Novo nome:</label>
+				<input type="text" id="novo_nome" maxlength="200" required>
+			</div>
+			<div class="dialogo_acoes">
+				<button type="button" id="cancelar_renomear" class="botao_pequeno">Cancelar</button>
+				<button type="button" id="confirmar_renomear" class="botao_pequeno">Salvar</button>
+			</div>
+		</form>
+	</dialog>
+
+	<footer class="rodape">
+		<p>&copy; 2026 Freevertio</p>
+	</footer>
+
+	<script type="module" src="js/biblioteca.js"></script>
+</body>
+</html>
