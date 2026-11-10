@@ -1,42 +1,85 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Criação de conta no Freevertio(em progresso).">
-        <title>Freevertio - Criar conta</title>
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Crie uma conta no Freevertio para guardar os arquivos que você converteu e baixá-los de novo quando quiser.">
+    <title>Criar conta - Freevertio</title>
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/componentes.css">
+  </head>
+  <body>
     <header>
-        <nav class="barra_nav" aria-label="Navegação principal">
-            <a href="index.html" class="logo_site">Freevertio</a>
-            <ul class="link_de_nav">
-                <li><a href="index.html">Início</a></li>
-                <li><a href="sobre.html">Sobre</a></li>
-                <li><a href="login.html">Login</a></li>
-            </ul>
-        </nav>
+      <nav class="barra_nav" aria-label="Navegação principal">
+        <a href="index.html" class="logo_site">Freevertio</a>
+        <ul class="link_de_nav">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li data-sessao="anonimo" hidden><a href="login.html">Entrar</a></li>
+          <li data-sessao="anonimo" hidden><a href="cria_login.html" aria-current="page">Criar conta</a></li>
+          <li data-sessao="logado" hidden><a href="biblioteca.html">Minha biblioteca</a></li>
+          <li data-sessao="admin" hidden><a href="admin.html">Administração</a></li>
+          <li data-sessao="logado" hidden>
+            <button type="button" data-acao="sair">Sair</button>
+          </li>
+        </ul>
+      </nav>
     </header>
+
     <main>
-        <section class="secao">
-        <h1>Criar conta</h1>
-        <p class="texto_secao">Esta seção ainda está em construção</p>
-        <p class="centralizado">
-            <a href="index.html" class="botao_primario">Voltar ao conversor</a>
+      <section class="login_conta" aria-labelledby="titulo_cadastro">
+        <h1 id="titulo_cadastro">Criar conta</h1>
+
+        <p class="texto_secao">
+          A conta serve apenas para guardar os arquivos convertidos na sua
+          biblioteca. Converter continua não exigindo cadastro.
         </p>
-        </section>
+
+        <form id="form_cadastro">
+          <div class="form_group">
+            <label for="nome_usuario">Nome:</label>
+            <input type="text" id="nome_usuario" name="nome" autocomplete="name"
+                   required minlength="2" maxlength="120">
+          </div>
+
+          <div class="form_group">
+            <label for="email_usuario">E-mail:</label>
+            <input type="email" id="email_usuario" name="email" autocomplete="email" required>
+          </div>
+
+          <div class="form_group">
+            <label for="senha">Senha:</label>
+            <!-- autocomplete="new-password" diz ao gerenciador de senhas que
+                 isto é um cadastro: ele passa a oferecer geração de senha
+                 forte em vez de tentar preencher a antiga. -->
+            <input type="password" id="senha" name="senha" autocomplete="new-password"
+                   required minlength="8" aria-describedby="ajuda_senha">
+            <small id="ajuda_senha">Mínimo de 8 caracteres.</small>
+          </div>
+
+          <div class="form_group">
+            <label for="senha_confirmacao">Confirme a senha:</label>
+            <input type="password" id="senha_confirmacao" name="senha_confirmacao"
+                   autocomplete="new-password" required minlength="8">
+          </div>
+
+          <p id="mensagem_erro" class="mensagem_erro" role="alert" hidden></p>
+          <p id="mensagem_sucesso" class="mensagem_sucesso" role="status" hidden></p>
+
+          <button type="submit" class="botao_primario">Criar conta</button>
+        </form>
+
+        <a href="login.html" class="botao_link">Já tem conta? Entrar</a>
+      </section>
     </main>
+
     <footer class="rodape">
-        <p>&copy; 2026 Freevertio</p>
-        <p><a href="https://www.youtube.com/watch?v=sxcAXamuyR4">Contato</a></p>
-        <p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Redes sociais</a></p>
+      <p>&copy; 2026 Freevertio</p>
+      <p><a href="https://www.youtube.com/watch?v=sxcAXamuyR4">Contato</a></p>
+      <p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Redes sociais</a></p>
     </footer>
 
-    </body>
+    <script type="module" src="js/cadastro.js"></script>
+  </body>
 </html>
-<!--
-  ATENÇÃO: NO PROGRAMA FOI USADA IA PARA AUXILIAR NA COMPREENSÃO DE
-  ALGUMAS FUNÇÕES (footer, nav etc.) E NA PROGRAMAÇÃO DO CONVERSOR.
-  Correções de semântica e acessibilidade feitas com auxílio do Claude (Anthropic).
--->

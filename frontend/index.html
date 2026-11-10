@@ -3,9 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Freevertio: conversor de arquivos gratuito que funciona direto no navegador.">
-    <title>Freevertio</title>
+    <meta name="description" content="Freevertio: conversor de arquivos que funciona direto no navegador. Converta imagens (JPG, PNG, WEBP) e dados (CSV, JSON, TXT) sem enviar nada, ou use o servidor para PDF e documentos.">
+    <title>Freevertio - Conversor de arquivos</title>
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/componentes.css">
   </head>
   <body>
     <header>
@@ -14,7 +16,13 @@
         <ul class="link_de_nav">
           <li><a href="index.html" aria-current="page">Início</a></li>
           <li><a href="sobre.html">Sobre</a></li>
-          <li><a href="login.html">Login</a></li>
+          <li data-sessao="anonimo" hidden><a href="login.html">Entrar</a></li>
+          <li data-sessao="anonimo" hidden><a href="cria_login.html">Criar conta</a></li>
+          <li data-sessao="logado" hidden><a href="biblioteca.html">Minha biblioteca</a></li>
+          <li data-sessao="admin" hidden><a href="admin.html">Administração</a></li>
+          <li data-sessao="logado" hidden>
+            <button type="button" data-acao="sair">Sair</button>
+          </li>
         </ul>
       </nav>
     </header>
@@ -22,16 +30,23 @@
     <main>
       <section class="intro" aria-labelledby="titulo_principal">
         <h1 id="titulo_principal">Freevertio: conversor de arquivos</h1>
-        <p>A versão piorada do Convertio. Converta imagens e arquivos de dados direto no navegador, sem enviar nada para um servidor.</p>
+        <p>Converta imagens e arquivos de dados direto no navegador, sem enviar nada para um servidor. Formatos que o navegador não alcança podem ser convertidos no servidor, com a sua autorização.</p>
       </section>
 
       <section class="conversor" aria-labelledby="titulo_conversor">
         <h2 id="titulo_conversor">Conversor</h2>
-        <p>Formatos aceitos: JPG, PNG, WEBP, CSV, JSON e TXT.</p>
+        <p>No navegador: JPG, PNG, WEBP, CSV, JSON e TXT. No servidor: PDF e documentos do Office.</p>
+
+        <!-- Só aparece quando a API não responde. A conversão local não
+             depende do backend, então a página continua útil. -->
+        <p id="aviso_offline" class="aviso_offline" role="status" hidden>
+          O servidor não está respondendo. A conversão no navegador continua
+          funcionando; os formatos que dependem do servidor ficam indisponíveis.
+        </p>
 
         <div class="area_upload">
           <label for="arquivo_input">Selecione um arquivo para converter</label>
-          <input type="file" id="arquivo_input" accept=".jpg,.jpeg,.png,.webp,.csv,.json,.txt">
+          <input type="file" id="arquivo_input" accept=".jpg,.jpeg,.png,.webp,.gif,.avif,.tiff,.csv,.json,.txt,.pdf,.docx,.xlsx,.pptx,.odt,.ods">
         </div>
 
         <div id="info_arquivo" class="file_info" hidden>
@@ -45,18 +60,55 @@
           <button type="button" id="botao_converter" class="botao_primario">Iniciar conversão</button>
         </div>
 
+        <!-- PRIMEIRO consentimento: enviar o arquivo ao servidor.
+             Só aparece quando o formato escolhido exige isso, para que o
+             caminho local continue sem fricção nova. -->
+        <div id="aviso_servidor" class="aviso_consentimento" hidden>
+          <p>
+            <strong>Esta conversão não é possível no navegador.</strong>
+            Para realizá-la, o arquivo será enviado ao servidor, convertido e
+            apagado em seguida — a menos que você peça para guardá-lo.
+          </p>
+          <label class="caixa_consentimento" for="aceita_envio">
+            <input type="checkbox" id="aceita_envio">
+            <span>Entendo e autorizo o envio deste arquivo ao servidor</span>
+          </label>
+        </div>
+
+        <!-- SEGUNDO consentimento, independente do primeiro: guardar o
+             resultado. Converter no servidor e guardar são decisões
+             diferentes, e juntá-las numa caixa só seria o que criticamos
+             nos serviços concorrentes. -->
+        <div id="caixa_guardar" hidden>
+          <label class="caixa_consentimento" for="guardar_biblioteca">
+            <input type="checkbox" id="guardar_biblioteca">
+            <span>Guardar o resultado na minha biblioteca</span>
+          </label>
+        </div>
+
+        <div id="estado_espera" class="estado_espera" hidden>
+          <p id="texto_espera" aria-live="polite">Convertendo…</p>
+          <div class="barra_progresso" role="progressbar" aria-label="Conversão em andamento"></div>
+          <p>
+            <button type="button" id="botao_cancelar" class="botao_pequeno">Cancelar</button>
+          </p>
+        </div>
+
         <div id="area_saida" aria-live="polite"></div>
       </section>
 
       <section class="secao" aria-labelledby="titulo_biblioteca">
         <h2 id="titulo_biblioteca">Sua biblioteca de arquivos</h2>
-        <p class="texto_secao">Em breve você poderá criar uma conta para guardar os arquivos que converteu e baixá-los de novo quando quiser.</p>
+        <p class="texto_secao">Crie uma conta para guardar os arquivos que converteu e baixá-los de novo quando quiser. Converter continua não exigindo cadastro.</p>
         <figure class="imagens">
           <img src="img/conversao.svg" alt="Ilustração de um documento sendo convertido em outro formato" width="480" height="240" loading="lazy">
           <figcaption>Converta, guarde e baixe seus arquivos.</figcaption>
         </figure>
-        <p class="centralizado">
+        <p class="centralizado" data-sessao="anonimo" hidden>
           <a href="cria_login.html" class="botao_primario">Criar minha conta</a>
+        </p>
+        <p class="centralizado" data-sessao="logado" hidden>
+          <a href="biblioteca.html" class="botao_primario">Ver minha biblioteca</a>
         </p>
       </section>
     </main>
@@ -67,11 +119,6 @@
       <p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Redes sociais</a></p>
     </footer>
 
-    <script src="js/conversor.js"></script>
+    <script type="module" src="js/conversor.js"></script>
   </body>
 </html>
-<!--
-  ATENÇÃO: NO PROGRAMA FOI USADA IA PARA AUXILIAR NA COMPREENSÃO DE
-  ALGUMAS FUNÇÕES (footer, nav etc.) E NA PROGRAMAÇÃO DO CONVERSOR.
-  Correções de semântica e acessibilidade feitas com auxílio do Claude (Anthropic).
--->

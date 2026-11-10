@@ -1,56 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Entre na sua Conta para acessar seu histórico de conversões">
-        <title>Freevertio - Login</title>
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
-        <header>
-            <nav class="barra_nav" aria-label="Navegação principal">
-                <a href="index.html" class="logo_site">Freevertio</a>
-                <ul class="link_de_nav">
-                    <li><a href="index.html">Início</a></li>
-                    <li><a href="sobre.html">Sobre</a></li>
-                    <li><a href="login.html" aria-current="page">Login</a></li>
-                </ul>
-            </nav>
-        </header>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Entre na sua conta Freevertio para acessar sua biblioteca de arquivos convertidos.">
+    <title>Entrar - Freevertio</title>
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/componentes.css">
+  </head>
+  <body>
+    <header>
+      <nav class="barra_nav" aria-label="Navegação principal">
+        <a href="index.html" class="logo_site">Freevertio</a>
+        <ul class="link_de_nav">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li data-sessao="anonimo" hidden><a href="login.html" aria-current="page">Entrar</a></li>
+          <li data-sessao="anonimo" hidden><a href="cria_login.html">Criar conta</a></li>
+          <li data-sessao="logado" hidden><a href="biblioteca.html">Minha biblioteca</a></li>
+          <li data-sessao="admin" hidden><a href="admin.html">Administração</a></li>
+          <li data-sessao="logado" hidden>
+            <button type="button" data-acao="sair">Sair</button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
     <main>
-        <section class="login_conta" aria-labelledby="titulo_login">
-            <h1 id="titulo_login">Insira o seu login</h1>
-            <form id="form_login">
-                <div class="form_group">
-                    <label for="email_usuario">E-mail:</label>
-                    <input type="email" id="email_usuario" name="email" autocomplete="email" required>
-                </div>
-                <div class="form_group">
-                    <label for="senha">Senha:</label>
-                    <input type="password" id="senha" name="senha" autocomplete="current-password" required>
-                </div>
+      <section class="login_conta" aria-labelledby="titulo_login">
+        <h1 id="titulo_login">Insira o seu login</h1>
 
-                <p id="mensagem_erro" class="mensagem_erro" role="alert" hidden>
-                    E-mail ou senha incorretos, por favor tente novamente.
-                </p>
+        <form id="form_login">
+          <div class="form_group">
+            <label for="email_usuario">E-mail:</label>
+            <input type="email" id="email_usuario" name="email" autocomplete="email" required>
+          </div>
+          <div class="form_group">
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" autocomplete="current-password" required>
+          </div>
 
-                <button type="submit" class="botao_primario">Entrar</button>
-            </form>
+          <!-- role="alert" faz o leitor de tela anunciar o erro assim que
+               ele aparece, sem esperar o usuário navegar até ele.
+               O texto é preenchido pelo JavaScript com a mensagem que o
+               servidor devolveu. -->
+          <p id="mensagem_erro" class="mensagem_erro" role="alert" hidden></p>
 
-            <a href="cria_login.html" class="botao_link">Não possui login? Clique aqui!</a>
-        </section>
+          <button type="submit" class="botao_primario">Entrar</button>
+        </form>
+
+        <a href="cria_login.html" class="botao_link">Não possui login? Crie uma conta</a>
+      </section>
     </main>
+
     <footer class="rodape">
-        <p>&copy; 2026 Freevertio</p>
-        <p><a href="https://www.youtube.com/watch?v=sxcAXamuyR4">Contato</a></p>
-        <p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Redes sociais</a></p>
+      <p>&copy; 2026 Freevertio</p>
+      <p><a href="https://www.youtube.com/watch?v=sxcAXamuyR4">Contato</a></p>
+      <p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Redes sociais</a></p>
     </footer>
-    <script src="js/login.js"></script>
-    </body>
+
+    <script type="module" src="js/login.js"></script>
+  </body>
 </html>
-<!--
-  ATENÇÃO: NO PROGRAMA FOI USADA IA PARA AUXILIAR NA COMPREENSÃO DE
-  ALGUMAS FUNÇÕES (footer, nav etc.) E na compreensão do login.
-  Correções de semântica e acessibilidade feitas com auxílio do Claude (Anthropic).
--->
