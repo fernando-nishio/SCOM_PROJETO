@@ -1,0 +1,501 @@
+/* =====================================================================
+   Freevertio - componentes do Trabalho Individual II
+
+   Arquivo ADITIVO: carregado depois de style.css e sem redefinir nada
+   que ja exista la. Todas as cores, espacos, raios e transicoes vem das
+   variaveis declaradas no :root do style.css - nenhum valor novo de cor
+   foi inventado aqui.
+
+   Carregue sempre nesta ordem:
+       <link rel="stylesheet" href="css/style.css">
+       <link rel="stylesheet" href="css/componentes.css">
+   ===================================================================== */
+
+
+/* ---------------------------------------------------------------------
+   0. O atributo hidden vence qualquer display
+
+   O navegador implementa o hidden com [hidden] { display: none } na sua
+   folha de estilos padrao. Qualquer regra de CLASSE tem especificidade
+   maior e o anula em silencio: um .lista_biblioteca { display: flex }
+   faz o elemento aparecer mesmo com hidden no HTML.
+
+   Foi exatamente esse o defeito encontrado no CSS do Trabalho I, em que
+   uma regra posterior anulava a classe de ocultacao. Esta linha fecha a
+   classe inteira de erro, em vez de corrigir caso a caso.
+   --------------------------------------------------------------------- */
+
+[hidden] {
+	display: none !important;
+}
+
+
+/* ---------------------------------------------------------------------
+   0.1 O botao "Sair" dentro da barra de navegacao
+
+   Sair executa uma acao, entao e <button> e nao <a>: um link exigiria
+   href="#" e preventDefault, e leitores de tela o anunciariam como link
+   para lugar nenhum.
+
+   Mas <button> traz o visual de botao do sistema operacional, e as
+   regras de style.css para o menu miram apenas o seletor `a`. Estas
+   declaracoes espelham .link_de_nav a para que os dois fiquem
+   indistinguiveis na tela, sem tocar naquele arquivo.
+   --------------------------------------------------------------------- */
+
+.link_de_nav button {
+	margin: 0;
+	padding: 0.25rem 0;
+	border: none;
+	border-bottom: 2px solid transparent;
+	background: none;
+	color: var(--cor-clara);
+	font-family: var(--fonte-base);
+	font-size: inherit;
+	font-weight: 600;
+	line-height: inherit;
+	cursor: pointer;
+	transition: color var(--transicao), border-color var(--transicao);
+}
+
+.link_de_nav button:hover {
+	color: var(--cor-destaque);
+}
+
+
+/* ---------------------------------------------------------------------
+   1. Consentimento
+
+   Dois consentimentos separados e independentes: enviar o arquivo ao
+   servidor, e guardar o resultado. Nenhum dos dois vem marcado.
+   --------------------------------------------------------------------- */
+
+.aviso_consentimento {
+	margin-top: var(--espaco-m);
+	padding: var(--espaco-m);
+	border: 2px solid var(--cor-destaque);
+	border-radius: var(--raio);
+	background-color: var(--cor-superficie);
+	color: var(--cor-clara);
+}
+
+.aviso_consentimento p {
+	margin: 0 0 var(--espaco-p);
+	font-size: 0.95rem;
+	line-height: 1.5;
+}
+
+.caixa_consentimento {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--espaco-p);
+	margin-top: var(--espaco-p);
+	cursor: pointer;
+	font-size: 0.95rem;
+	line-height: 1.4;
+}
+
+/* Alvo de toque maior que o padrao: caixa de 1rem e dificil de acertar
+   no celular, e esta decide se um arquivo sai da maquina. */
+.caixa_consentimento input[type="checkbox"] {
+	flex-shrink: 0;
+	width: 1.25rem;
+	height: 1.25rem;
+	margin-top: 0.1rem;
+	accent-color: var(--cor-destaque);
+	cursor: pointer;
+}
+
+
+/* ---------------------------------------------------------------------
+   2. Espera
+
+   A conversao local era instantanea. A do servidor leva segundos e pode
+   entrar numa fila, entao precisa de estado visivel e de cancelamento.
+   --------------------------------------------------------------------- */
+
+.estado_espera {
+	display: flex;
+	flex-direction: column;
+	gap: var(--espaco-p);
+	padding: var(--espaco-m);
+	text-align: center;
+	color: var(--cor-clara);
+}
+
+.barra_progresso {
+	position: relative;
+	overflow: hidden;
+	height: 0.5rem;
+	border-radius: var(--raio);
+	background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Progresso indeterminado: o servidor nao informa a porcentagem, entao
+   a barra indica atividade, nao avanco. Fingir uma porcentagem seria
+   mentir para o usuario. */
+.barra_progresso::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 40%;
+	height: 100%;
+	border-radius: var(--raio);
+	background-color: var(--cor-destaque);
+	animation: desliza 1.4s ease-in-out infinite;
+}
+
+@keyframes desliza {
+	0%   { transform: translateX(-100%); }
+	100% { transform: translateX(350%); }
+}
+
+/* Respeita quem pediu menos movimento no sistema operacional: animacao
+   continua e gatilho de enxaqueca e de desconforto vestibular. */
+@media (prefers-reduced-motion: reduce) {
+	.barra_progresso::after {
+		animation: none;
+		width: 100%;
+		opacity: 0.6;
+	}
+}
+
+.posicao_fila {
+	font-size: 0.9rem;
+	opacity: 0.85;
+}
+
+
+/* ---------------------------------------------------------------------
+   3. Selos
+   --------------------------------------------------------------------- */
+
+.selo {
+	display: inline-block;
+	padding: 0.15rem 0.5rem;
+	border-radius: var(--raio);
+	font-size: 0.78rem;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+/* Onde o arquivo foi convertido. Mostrar isso item a item e honestidade
+   virando funcionalidade. */
+.selo_local    { background-color: #1f5c2e; color: var(--cor-clara); }
+.selo_servidor { background-color: #5c3a1f; color: var(--cor-clara); }
+
+.selo_admin    { background-color: var(--cor-primaria); color: var(--cor-clara); }
+.selo_inativo  { background-color: #5a5a5a;             color: var(--cor-clara); }
+
+.selo_info  { background-color: #1f4b5c; color: var(--cor-clara); }
+.selo_aviso { background-color: #6b5410; color: var(--cor-clara); }
+.selo_erro  { background-color: #7a2020; color: var(--cor-clara); }
+
+
+/* ---------------------------------------------------------------------
+   4. Biblioteca
+   --------------------------------------------------------------------- */
+
+.lista_biblioteca {
+	display: flex;
+	flex-direction: column;
+	gap: var(--espaco-m);
+	margin: var(--espaco-g) 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.item_biblioteca {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--espaco-m);
+	padding: var(--espaco-m);
+	border-radius: var(--raio);
+	background-color: var(--cor-escura);
+	color: var(--cor-clara);
+	box-shadow: var(--sombra);
+}
+
+.item_dados {
+	flex: 1 1 16rem;
+	min-width: 0;   /* permite que o nome longo seja cortado em vez de empurrar o layout */
+}
+
+.item_nome {
+	margin: 0 0 0.25rem;
+	overflow: hidden;
+	font-size: 1.05rem;
+	font-weight: bold;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.item_detalhes {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--espaco-p);
+	font-size: 0.85rem;
+	opacity: 0.85;
+}
+
+.item_acoes {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--espaco-p);
+}
+
+.botao_pequeno {
+	padding: 0.4rem 0.9rem;
+	border: 1px solid var(--cor-destaque);
+	border-radius: var(--raio);
+	background-color: transparent;
+	color: var(--cor-destaque);
+	font-family: var(--fonte-base);
+	font-size: 0.9rem;
+	text-decoration: none;
+	cursor: pointer;
+	transition: var(--transicao);
+}
+
+.botao_pequeno:hover {
+	background-color: var(--cor-destaque);
+	color: var(--cor-escura);
+}
+
+/* Acao destrutiva com aparencia propria: apagar nao pode parecer igual a
+   baixar. A cor de erro ja existe na paleta e tem 9,36:1 sobre o fundo
+   escuro do cartao. */
+.botao_perigo {
+	border-color: var(--cor-erro);
+	color: var(--cor-erro);
+}
+
+.botao_perigo:hover {
+	background-color: var(--cor-erro);
+	color: var(--cor-escura);
+}
+
+
+/* ---------------------------------------------------------------------
+   5. Estado vazio
+
+   Uma lista vazia parece defeito. Esta caixa explica como itens chegam
+   ali, e por isso nao e enfeite.
+   --------------------------------------------------------------------- */
+
+.estado_vazio {
+	margin-top: var(--espaco-g);
+	padding: var(--espaco-xg) var(--espaco-m);
+	border: 2px dashed var(--cor-destaque);
+	border-radius: var(--raio-g);
+	text-align: center;
+}
+
+.estado_vazio p {
+	max-width: 46ch;
+	margin: 0 auto var(--espaco-m);
+	line-height: 1.6;
+}
+
+
+/* ---------------------------------------------------------------------
+   6. Paginacao
+   --------------------------------------------------------------------- */
+
+.paginacao {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--espaco-m);
+	margin-top: var(--espaco-g);
+}
+
+.paginacao button[disabled] {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+
+/* ---------------------------------------------------------------------
+   7. Administracao
+   --------------------------------------------------------------------- */
+
+.painel_estatisticas {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--espaco-m);
+	margin-top: var(--espaco-g);
+	padding: 0;
+	list-style: none;
+}
+
+.cartao_estatistica {
+	flex: 1 1 11rem;
+	padding: var(--espaco-m);
+	border-radius: var(--raio);
+	background-color: var(--cor-escura);
+	color: var(--cor-clara);
+	text-align: center;
+}
+
+.cartao_valor {
+	display: block;
+	font-size: 1.9rem;
+	font-weight: bold;
+	line-height: 1.2;
+}
+
+.cartao_rotulo {
+	display: block;
+	margin-top: 0.25rem;
+	font-size: 0.85rem;
+	opacity: 0.85;
+}
+
+/* A tabela rola na horizontal dentro deste contêiner, em vez de empurrar
+   a pagina inteira - o requisito de nao haver rolagem horizontal vale
+   para o documento, nao para um bloco que a anuncia. */
+.rolagem_tabela {
+	overflow-x: auto;
+	margin-top: var(--espaco-g);
+}
+
+.tabela_admin {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.9rem;
+}
+
+.tabela_admin caption {
+	margin-bottom: var(--espaco-p);
+	font-weight: bold;
+	text-align: left;
+}
+
+.tabela_admin th,
+.tabela_admin td {
+	padding: var(--espaco-p) var(--espaco-m);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+	text-align: left;
+	vertical-align: middle;
+}
+
+.tabela_admin thead th {
+	background-color: var(--cor-escura);
+	color: var(--cor-clara);
+	white-space: nowrap;
+}
+
+.tabela_admin tbody tr:hover {
+	background-color: rgba(158, 18, 163, 0.07);
+}
+
+.celula_monoespacada {
+	font-family: ui-monospace, "Courier New", monospace;
+	font-size: 0.82rem;
+}
+
+.filtros {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: var(--espaco-m);
+	margin-top: var(--espaco-m);
+}
+
+
+/* ---------------------------------------------------------------------
+   8. Confirmacao de acao destrutiva
+
+   Elemento <dialog> nativo: ja traz foco preso dentro da caixa, fechar
+   com Esc e semantica de dialogo modal para leitores de tela. Uma div
+   com position:fixed exigiria reimplementar as tres coisas.
+   --------------------------------------------------------------------- */
+
+.dialogo {
+	max-width: 32rem;
+	padding: var(--espaco-g);
+	border: none;
+	border-radius: var(--raio-g);
+	box-shadow: var(--sombra);
+	color: var(--cor-texto);
+}
+
+.dialogo::backdrop {
+	background-color: rgba(0, 0, 0, 0.55);
+}
+
+.dialogo h2 {
+	margin-top: 0;
+}
+
+.dialogo_acoes {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: var(--espaco-p);
+	margin-top: var(--espaco-g);
+}
+
+
+/* ---------------------------------------------------------------------
+   9. Mensagens
+   --------------------------------------------------------------------- */
+
+.mensagem_sucesso {
+	padding: var(--espaco-p) var(--espaco-m);
+	border-radius: var(--raio);
+	background-color: #1f5c2e;
+	color: var(--cor-clara);
+}
+
+.aviso_offline {
+	margin-bottom: var(--espaco-m);
+	padding: var(--espaco-m);
+	border-left: 4px solid var(--cor-erro);
+	border-radius: var(--raio);
+	background-color: var(--cor-superficie);
+	color: var(--cor-clara);
+}
+
+
+/* ---------------------------------------------------------------------
+   10. Responsividade
+
+   Mesmos pontos de quebra do style.css: 768px e 480px.
+   --------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+	.item_biblioteca {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.item_acoes {
+		justify-content: flex-start;
+	}
+
+	.cartao_estatistica {
+		flex-basis: 100%;
+	}
+}
+
+@media (max-width: 480px) {
+	.item_acoes .botao_pequeno {
+		flex: 1 1 auto;
+		text-align: center;
+	}
+
+	.filtros {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.dialogo {
+		margin: var(--espaco-m);
+		padding: var(--espaco-m);
+	}
+}
