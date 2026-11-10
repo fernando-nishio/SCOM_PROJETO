@@ -25,6 +25,17 @@
    classe inteira de erro, em vez de corrigir caso a caso.
    --------------------------------------------------------------------- */
 
+/* Verdes do aviso de sucesso. Declarados aqui, e nao no :root do
+   style.css, para manter este arquivo aditivo: nada em style.css muda.
+   Branco sobre --cor-sucesso da 7,4:1; --cor-sucesso-escura sobre
+   --cor-sucesso-clara da 8,1:1. */
+:root {
+	--cor-sucesso: #1f5c2e;
+	--cor-sucesso-clara: #4caf6d;
+	--cor-sucesso-escura: #10331b;
+}
+
+
 [hidden] {
 	display: none !important;
 }
@@ -445,11 +456,53 @@
    9. Mensagens
    --------------------------------------------------------------------- */
 
+/* O link dentro do aviso herdava --cor-primaria, um roxo escuro sobre
+   fundo verde escuro: contraste de 1,1:1, ilegivel. Aqui ele passa a
+   ser claro e sublinhado - sublinhado porque a cor sozinha nao pode ser
+   o unico sinal de que algo e clicavel (WCAG 1.4.1).
+
+   O alinhamento a esquerda e deliberado: .conversor centraliza tudo, e
+   texto centralizado ao lado de um icone fica torto quando passa de uma
+   linha. */
 .mensagem_sucesso {
-	padding: var(--espaco-p) var(--espaco-m);
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	margin-top: var(--espaco-m);
+	padding: var(--espaco-m);
+	text-align: left;
+	border-left: 4px solid var(--cor-sucesso-clara);
 	border-radius: var(--raio);
-	background-color: #1f5c2e;
+	background-color: var(--cor-sucesso);
 	color: var(--cor-clara);
+}
+
+/* A barra e as aspas depois do simbolo sao o texto alternativo do
+   conteudo gerado: deixam o sinal visivel e silencioso para o leitor de
+   tela, que ja recebe a mensagem inteira pelo role="status". */
+.mensagem_sucesso::before {
+	content: "\2713" / "";
+	flex: none;
+	display: grid;
+	place-items: center;
+	width: 1.6rem;
+	height: 1.6rem;
+	border-radius: 50%;
+	background-color: var(--cor-sucesso-clara);
+	color: var(--cor-sucesso-escura);
+	font-size: 0.95rem;
+	font-weight: 700;
+}
+
+.mensagem_sucesso a {
+	color: var(--cor-clara);
+	font-weight: 600;
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+}
+
+.mensagem_sucesso a:hover {
+	text-decoration: none;
 }
 
 .aviso_offline {
