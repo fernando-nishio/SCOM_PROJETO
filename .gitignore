@@ -23,3 +23,6 @@ a.txt
 c.txt
 u.txt
 admin.txt
+
+# Arquivos de troca do editor
+*.swp
