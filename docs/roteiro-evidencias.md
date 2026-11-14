@@ -73,9 +73,20 @@ cd /home/varik/S_COM
 psql -h localhost -U freevertio -d freevertio -f sql/schema.sql
 ```
 
-**Deve aparecer:** uma sequência de `CREATE TABLE` / `CREATE INDEX` ou
-`NOTICE: relation already exists, skipping`, e **nenhum** `ERROR`. O script é
-idempotente — rodar de novo não apaga nada.
+> **Atenção: este script apaga todos os dados.** Ele começa com `DROP TABLE`
+> nas cinco tabelas e recria tudo do zero — contas, sessões, biblioteca e logs
+> somem. Por isso este bloco vem antes dos outros que dependem do banco. Logo
+> depois dele, rode o seed de novo:
+>
+> ```bash
+> cd /home/varik/S_COM/backend && NODE_ENV=development npm run seed
+> ```
+>
+> Os arquivos em `armazenamento/` não são apagados e ficam órfãos; podem sair
+> com `rm /home/varik/S_COM/armazenamento/*`.
+
+**Deve aparecer:** cinco `DROP TABLE`, depois os `CREATE TABLE` e `CREATE INDEX`,
+um `INSERT 0 2` (os dois perfis) e **nenhum** `ERROR`.
 
 Vale também mostrar o banco pronto:
 
@@ -236,20 +247,26 @@ curl -s -b $JAR -H "Content-Type: application/json" -H "X-CSRF-Token: $TOKEN" \
   http://localhost:3000/api/contas
 ```
 
-**Login bem-sucedido** (`login_sucesso`):
-
-```bash
-curl -s -b $JAR -c $JAR -H "Content-Type: application/json" -H "X-CSRF-Token: $TOKEN" \
-  -d '{"email":"evidencia@exemplo.com","senha":"SenhaTeste123"}' \
-  http://localhost:3000/api/sessao
-```
+> **A ordem importa.** O login bem-sucedido troca a sessão — é a proteção
+> contra fixação de sessão — e o token CSRF pertence à sessão. Por isso a falha
+> vem **antes** do sucesso: depois do login, o `$TOKEN` antigo não serve mais, e
+> uma tentativa com ele voltaria `403 CSRF_INVALIDO` em vez de registrar a falha.
 
 **Falha de autenticação** (`login_falha`):
 
 ```bash
 curl -s -b $JAR -H "Content-Type: application/json" -H "X-CSRF-Token: $TOKEN" \
   -d '{"email":"evidencia@exemplo.com","senha":"senha_errada"}' \
-  http://localhost:3000/api/sessao
+  http://localhost:3000/api/sessao; echo
+```
+
+**Login bem-sucedido** (`login_sucesso`). O `-c $JAR` grava o cookie da sessão
+nova, que o passo seguinte precisa:
+
+```bash
+curl -s -b $JAR -c $JAR -H "Content-Type: application/json" -H "X-CSRF-Token: $TOKEN" \
+  -d '{"email":"evidencia@exemplo.com","senha":"SenhaTeste123"}' \
+  http://localhost:3000/api/sessao; echo
 ```
 
 **Erro interno** (`erro_interno`) — este precisa de um defeito de verdade. A forma
@@ -314,6 +331,9 @@ login — não adianta.
 
 ## Ordem sugerida
 
-1, 2 e 3 são rápidos e não dependem de nada. Depois o bloco 4 inteiro, que é o
-que vale mais ponto. O 5 por último, porque os comandos dos blocos anteriores já
-terão enchido o log de eventos — o que ajuda, não atrapalha.
+1 e 2 são rápidos e não tocam no banco. O 3 **zera o banco**, então faça-o antes
+de tudo o que depende de dados, e rode o seed logo em seguida. Depois o bloco 4
+inteiro, que é o que vale mais ponto. O 5 por último, porque os comandos dos
+blocos anteriores já terão enchido o log de eventos — o que ajuda, não atrapalha.
+O 6 também depois do 3: a biblioteca precisa de arquivos guardados depois que o
+banco foi recriado.

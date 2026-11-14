@@ -40,7 +40,7 @@ sudo -u postgres psql -c "CREATE DATABASE freevertio OWNER freevertio;"
 psql -h localhost -U freevertio -d freevertio -f sql/schema.sql
 ```
 
-O `schema.sql` é idempotente: rodar de novo não apaga nada e não dá erro.
+> **Atenção:** o `schema.sql` recria as tabelas do zero. Ele começa com `DROP TABLE` nas cinco tabelas, então rodá-lo de novo **apaga todos os dados** — contas, sessões, biblioteca e logs. Use-o na instalação, ou quando quiser de fato zerar o banco; depois, rode o seed de novo. Os arquivos em `armazenamento/` não são apagados e ficam órfãos.
 
 **2. Configuração.**
 
