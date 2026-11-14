@@ -75,7 +75,7 @@ Acesse **http://localhost:3000**. O próprio servidor Node entrega o front-end; 
 NODE_ENV=development npm run seed
 ```
 
-Cria duas contas para teste — `admin@freevertio.local` / `AdminTeste123` e `usuario@freevertio.local` / `UsuarioTeste123`. Não são credenciais da aplicação: o script verifica `NODE_ENV` e **se recusa a rodar fora de desenvolvimento**, justamente para que estas contas nunca existam em um ambiente real.
+Cria duas contas para teste, `admin@freevertio.local` e `usuario@freevertio.local`, com **senhas aleatórias geradas a cada execução** e impressas uma única vez no terminal — anote-as. Nenhuma senha fica no repositório, e rodar o seed de novo gera senhas novas. O script verifica `NODE_ENV` e **se recusa a rodar fora de desenvolvimento**, porque cria um administrador e redefine senhas de contas existentes.
 
 **5. Testes.**
 

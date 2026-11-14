@@ -21,8 +21,9 @@ Se ainda não criou as contas de teste:
 NODE_ENV=development npm run seed
 ```
 
-Contas criadas: `admin@freevertio.local` / `AdminTeste123` e
-`usuario@freevertio.local` / `UsuarioTeste123`.
+Contas criadas: `admin@freevertio.local` e `usuario@freevertio.local`. As senhas
+são aleatórias, geradas a cada execução, e o seed as imprime uma única vez —
+anote-as. Rodar o seed de novo gera senhas novas.
 
 Terminal 2 — o resto. Deixe o token CSRF pronto, porque quase tudo precisa dele:
 
@@ -46,7 +47,7 @@ Se o `echo` sair vazio, o servidor não está no ar.
 cd /home/varik/S_COM/backend && npm test 2>&1 | tail -15
 ```
 
-**Deve aparecer:** `tests 99`, `pass 99`, `fail 0`.
+**Deve aparecer:** `tests 103`, `pass 103`, `fail 0`.
 
 **Print:** esse resumo final. Um print do rodapé basta; a lista inteira não cabe.
 
@@ -188,8 +189,10 @@ JAR2=/tmp/jar_usuario.txt; rm -f $JAR2
 T2=$(curl -s -c $JAR2 http://localhost:3000/api/csrf \
   | python3 -c "import sys,json; print(json.load(sys.stdin)['csrfToken'])")
 
+SENHA_USUARIO='cole-aqui-a-senha-impressa-pelo-seed'
+
 curl -s -b $JAR2 -c $JAR2 -H "Content-Type: application/json" -H "X-CSRF-Token: $T2" \
-  -d '{"email":"usuario@freevertio.local","senha":"UsuarioTeste123"}' \
+  -d '{"email":"usuario@freevertio.local","senha":"'"$SENHA_USUARIO"'"}' \
   http://localhost:3000/api/sessao
 
 curl -i -b $JAR2 http://localhost:3000/api/admin/usuarios
