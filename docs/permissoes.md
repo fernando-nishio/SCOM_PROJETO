@@ -14,8 +14,8 @@ tomada no Trabalho I de que **a conversão não exige cadastro**. Quem só quer
 converter um arquivo continua podendo, sem conta.
 
 Não há tela de promoção a administrador. Um administrador é criado por quem
-tem acesso ao banco — por `sql/seed.js` em desenvolvimento, ou por um `UPDATE`
-manual. Expor essa operação pela aplicação criaria uma rota de escalada de
+tem acesso ao banco — por `backend/scripts/seed.js` em desenvolvimento, ou por um
+`UPDATE` manual. Expor essa operação pela aplicação criaria uma rota de escalada de
 privilégio sem benefício nenhum para o domínio.
 
 ## A matriz
@@ -77,8 +77,8 @@ em uma condicional vire acesso irrestrito.
 
 | Camada | Responsabilidade |
 |---|---|
-| `middlewares/exigirLogin.js` | rejeita quem não tem sessão → `401` |
-| `middlewares/exigirPerfil.js` | rejeita perfil insuficiente → `403` |
+| `middlewares/exigir-login.js` | rejeita quem não tem sessão → `401` |
+| `middlewares/exigir-perfil.js` | rejeita perfil insuficiente → `403` |
 | `servicos/` | aplica a regra de propriedade do registro |
 | `dados/` | a condição `usuario_id = $2` nas consultas |
 
@@ -88,8 +88,10 @@ criado depois que alguém esqueceu de repetir a checagem.
 
 ## Testes de controle de acesso
 
-Estes casos estão entre os testes de segurança documentados na Seção 10 do
-relatório:
+Os casos 1 e 3 estão documentados com capturas na Seção 10 do relatório. Os
+casos 2 e 4 são cobertos pelo teste automatizado que confere o dono como
+condição de busca, em `testes/injecao.test.js`. O caso 5 decorre de o logout
+destruir a sessão no banco, e não apenas no navegador.
 
 | # | Cenário | Esperado |
 |---|---|---|

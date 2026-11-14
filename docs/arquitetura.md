@@ -79,13 +79,13 @@ Duas consequências:
 
 | # | Onde | O que acontece |
 |---|---|---|
-| 1 | `middlewares/rateLimit` | a origem excedeu a cota? → `429` |
-| 2 | `middlewares/upload` | multer grava em disco temporário com nome UUID |
+| 1 | `middlewares/limites` | a origem excedeu a cota? → `429` |
+| 2 | `middlewares/upload` | multer recebe o arquivo **em memória**: um por requisição, até 20 MB; nome acima de 300 caracteres → `400` |
 | 3 | `rotas/conversoes` | lê os campos, chama o serviço |
 | 4 | `servicos/conversao` | valida tamanho, tipo real (*magic bytes*) e par de formatos |
 | 5 | `servicos/fila` | aguarda vaga; recusa com `503` se a fila estiver cheia |
 | 6 | `servicos/conversao` | `execFile` do conversor externo, com timeout |
-| 7 | `dados/conversaoRepo` | grava a linha, **se** o usuário pediu para guardar |
+| 7 | `servicos/biblioteca` | grava o arquivo em `armazenamento/` e depois a linha, **se** o usuário pediu para guardar |
 | 8 | `rotas/conversoes` | devolve o arquivo como `attachment` |
 | 9 | `finally` | apaga os temporários, inclusive em caso de erro |
 
