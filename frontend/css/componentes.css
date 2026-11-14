@@ -25,14 +25,17 @@
    classe inteira de erro, em vez de corrigir caso a caso.
    --------------------------------------------------------------------- */
 
-/* Verdes do aviso de sucesso. Declarados aqui, e nao no :root do
-   style.css, para manter este arquivo aditivo: nada em style.css muda.
-   Branco sobre --cor-sucesso da 7,4:1; --cor-sucesso-escura sobre
-   --cor-sucesso-clara da 8,1:1. */
+/* Cores que o style.css nao tem: os verdes do aviso de sucesso e um
+   vermelho escuro para acao destrutiva sobre fundo claro. Declaradas
+   aqui, e nao no :root do style.css, para manter este arquivo aditivo:
+   nada em style.css muda. Branco sobre --cor-sucesso da 7,4:1;
+   --cor-sucesso-escura sobre --cor-sucesso-clara da 8,1:1; --cor-perigo
+   sobre branco da 6,54:1. */
 :root {
 	--cor-sucesso: #1f5c2e;
 	--cor-sucesso-clara: #4caf6d;
 	--cor-sucesso-escura: #10331b;
+	--cor-perigo: #b3261e;
 }
 
 
@@ -271,7 +274,7 @@
 	transition: var(--transicao);
 }
 
-.botao_pequeno:hover {
+.botao_pequeno:hover:not(:disabled) {
 	background-color: var(--cor-destaque);
 	color: var(--cor-escura);
 }
@@ -284,9 +287,56 @@
 	color: var(--cor-erro);
 }
 
-.botao_perigo:hover {
+.botao_perigo:hover:not(:disabled) {
 	background-color: var(--cor-erro);
 	color: var(--cor-escura);
+}
+
+/* Sobre fundo claro.
+
+   .botao_pequeno nasceu para os cartoes escuros da biblioteca, onde
+   --cor-destaque da 6,57:1. Sobre o branco da pagina, dos dialogos e das
+   tabelas administrativas, o mesmo roxo claro cai para 2,42:1 e o
+   vermelho claro do perigo para 1,70:1 - os dois reprovam no AA. Nesses
+   quatro contextos o botao usa as cores escuras: --cor-primaria da
+   6,84:1 e --cor-perigo da 6,54:1 sobre branco, e o texto branco do
+   estado de hover mantem as mesmas razoes. */
+.paginacao .botao_pequeno,
+.dialogo .botao_pequeno,
+.tabela_admin .botao_pequeno,
+.filtros .botao_pequeno {
+	border-color: var(--cor-primaria);
+	color: var(--cor-primaria);
+}
+
+.paginacao .botao_pequeno:hover:not(:disabled),
+.dialogo .botao_pequeno:hover:not(:disabled),
+.tabela_admin .botao_pequeno:hover:not(:disabled),
+.filtros .botao_pequeno:hover:not(:disabled) {
+	background-color: var(--cor-primaria);
+	color: var(--cor-clara);
+}
+
+.dialogo .botao_perigo,
+.tabela_admin .botao_perigo {
+	border-color: var(--cor-perigo);
+	color: var(--cor-perigo);
+}
+
+.dialogo .botao_perigo:hover:not(:disabled),
+.tabela_admin .botao_perigo:hover:not(:disabled) {
+	background-color: var(--cor-perigo);
+	color: var(--cor-clara);
+}
+
+/* Desabilitado precisa parecer desabilitado. O caso concreto e o botao
+   Desativar na linha do proprio administrador, bloqueado pela trava que
+   impede alguem de se trancar do lado de fora. Sem este estilo ele era
+   identico aos ativos, e o unico aviso era o title. A WCAG isenta de
+   requisito de contraste os componentes inativos (1.4.3). */
+.botao_pequeno:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
 }
 
 
