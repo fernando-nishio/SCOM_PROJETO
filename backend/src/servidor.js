@@ -151,13 +151,12 @@ async function iniciar() {
 	await detectarFerramentas();
 
 	const servidor = app.listen(config.porta, () => {
-		escrever("info", "servidor_iniciado", {
+		// Uma chamada so: registrar() ja escreve no console e grava na
+		// tabela log_evento. Chamar escrever() antes duplicava a linha.
+		registrar("info", EVENTOS.SERVIDOR_INICIADO, {
 			detalhe:
 				`http://localhost:${config.porta} | ambiente=${config.ambiente} | ` +
 				`banco=${info.banco}`,
-		});
-		registrar("info", EVENTOS.SERVIDOR_INICIADO, {
-			detalhe: `porta ${config.porta}, ambiente ${config.ambiente}`,
 		});
 	});
 
